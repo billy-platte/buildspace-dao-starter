@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import { ethers } from "ethers";
@@ -32,7 +32,7 @@ const App = () => {
   const [proposals, setProposals] = useState([]);
   const [isVoting, setIsVoting] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
-  let currentError = {};
+  let appError = useRef(null);
 
   // A fancy function to shorten someones wallet address, no need to show the whole thing. 
   const shortenAddress = (str) => {
@@ -160,11 +160,11 @@ const App = () => {
       .catch((error) => {
         setHasClaimedNFT(false);
         console.error("failed to get nft balance", error);
-        currentError = error;
+        appError.current = error;
       });
   }, [address]);
 
-  if (currentError.length > 0) {
+  if (appError.length > 0) {
     if (error instanceof UnsupportedChainIdError) {
       return (
         <div className="unsupported-network">
@@ -218,7 +218,7 @@ const App = () => {
                 {memberList.map((member) => {
                   return (
                     <tr key={member.address}>
-                      <td><a target="_blank" href={'https://rinkeby.etherscan.io/address/' + member.address}>{shortenAddress(member.address)}</a></td>
+                      <td><a rel="noreferrer" target="_blank" href={'https://rinkeby.etherscan.io/address/' + member.address}>{shortenAddress(member.address)}</a></td>
                       <td>{member.tokenAmount}</td>
                     </tr>
                   );
