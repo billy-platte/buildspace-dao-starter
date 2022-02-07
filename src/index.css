@@ -4,7 +4,7 @@ body {
   font-family: Inter, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #7700ee;
+  background-color: #00cdee5c;
   color: #fff;
   overflow-x: hidden;
 }
@@ -63,6 +63,7 @@ h1 {
   width: 100%;
   text-align: left;
   gap: 2rem;
+  margin-top: 3rem;
 }
 .member-page > div > div {
   display: flex;
